@@ -11,6 +11,10 @@ This script demonstrates how to connect to a server using Node.js and perform au
 
 The `client.js` script demonstrates how to connect to a server using the Fetch API in Node.js. It includes functionality for authentication with the server and making HTTP requests.
 
+## Axios Script
+
+The `axios.js` script demonstrates how to connect to a server using axios by accessing cookie from the server. It includes functionality for authentication with the server and making POST requests.
+
 ## Usage
 
 1. Clone the repository to your local machine.
