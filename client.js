@@ -1,4 +1,4 @@
-'use strict'; // Enable strict mode to enforce stricter parsing and error handling by JavaScript engine
+'use strict'; // Enable strict mode to enforce stricter parsing, error handling by JavaScript engine
 
 // Import necessary modules
 import fetch from 'node-fetch'; // Library to make HTTP requests
