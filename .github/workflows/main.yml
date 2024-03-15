@@ -1,0 +1,43 @@
+name: Webchart Authentication Workflow
+
+on:
+  push:
+    branches:
+      - main # Trigger the workflow on push to the main branch
+
+jobs:
+  authenticate_with_axios:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14' # Use Node.js version 14
+      
+    - name: Install dependencies
+      run: npm install # Install project dependencies
+    
+    - name: Authenticate with Axios
+      run: node axios.js # Run the authentication script using Axios
+
+  authenticate_with_client:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14' # Use Node.js version 14
+      
+    - name: Install dependencies
+      run: npm install # Install project dependencies
+    
+    - name: Authenticate with Client.js
+      run: node client.js # Run the authentication script using Node-fetch
