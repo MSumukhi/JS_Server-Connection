@@ -55,7 +55,6 @@ getResponse('https://sumukhi.webchartnow.com/webchart.cgi', { 'login_user': 'Sum
         // Check if authentication was successful
         if (response && response.status === 200) {
             console.log('Authentication successful.');
-            console.log(response);
             if (response.headers['set-cookie']) {
                 cookie = response.headers['set-cookie'][0].split('=')[1].split(';')[0];
                 console.log('cookie:', cookie);
@@ -80,8 +79,8 @@ getResponse('https://sumukhi.webchartnow.com/webchart.cgi', { 'login_user': 'Sum
         // Handle the response of the second request
         if (response && response.status === 200) {
             console.log('Second request successful.');
-            console.log(response);
-            // Handle further processing here
+            // Log the response after the second request
+            console.log('Response after second request:', response);
         } else {
             console.log('Second request failed.');
             // Handle failure
