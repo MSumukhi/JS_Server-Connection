@@ -5,34 +5,35 @@ import readlineSync from 'readline-sync'; // Library for synchronous readline
 // Global variables
 let cookie = null; // Cookie for session management
 let password = null; // User password for authentication
+const apiUrl = 'https://sumukhi.webchartnow.com/webchart.cgi'; // API URL
 
 /**
  * Function to send a POST request to a specified URL with provided data
- * @param {string} url - The URL to send the request to
  * @param {Object} data - Data to be sent in the request body
+ * @param {Object} headers - Optional headers to be sent with the request
  * @returns {Promise} - Promise representing the HTTP response
  */
-
-const getResponse = async (url, data = {}) => {
+const getResponse = async (data = {}, headers = {}) => {
     // Prepare request parameter using URLSearchParams for constructing the request body
-    let params = new URLSearchParams();
-    // Append session cookie to data if available
-    let headers = {};
+    const params = new URLSearchParams();
+    
+    // Append session cookie to headers if available
     if (cookie) {
         headers['Cookie'] = `wc_miehr_sumukhi_session_id=${cookie}`;
     } else {
+        // Add username and password to the request body if cookie is not available
         params.append('login_user', data['login_user']); // Add username
         params.append('login_passwd', data['login_passwd']); // Add password
     }
     
-    let options = {
+    const options = {
         headers: headers,
-        method: "POST",
+        method: 'POST',
         data: params
     };
 
     // Send request and return the response
-    return axios(url, options);
+    return axios(apiUrl, options);
 };
 
 /**
@@ -46,18 +47,18 @@ const getPassword = () => {
     });
 };
 
-
 // Prompt user for password input
 getPassword();
 
-getResponse('https://sumukhi.webchartnow.com/webchart.cgi', { 'login_user': 'Sumu1231', 'login_passwd': password })
+// Authenticate user and obtain session cookie
+getResponse({ 'login_user': 'Sumu1231', 'login_passwd': password })
     .then(response => {
         // Check if authentication was successful
         if (response && response.status === 200) {
             console.log('Authentication successful.');
             if (response.headers['set-cookie']) {
                 cookie = response.headers['set-cookie'][0].split('=')[1].split(';')[0];
-                console.log('cookie:', cookie);
+                //console.log('cookie:', cookie);
             } else {
                 console.log('Set-cookie header not found or empty.');
             }
@@ -68,10 +69,10 @@ getResponse('https://sumukhi.webchartnow.com/webchart.cgi', { 'login_user': 'Sum
     .then(() => {
         // Make another request using the obtained cookie
         if (cookie) {
-            console.log('Attempting second request using cookie:', cookie);
-            return getResponse('https://sumukhi.webchartnow.com/webchart.cgi');
+            //console.log('Attempting second request using cookie:', cookie);
+            return getResponse();
         } else {
-            console.log('Cookie not available. Cannot make the second request.');
+            //console.log('Cookie not available. Cannot make the second request.');
             throw new Error('Cookie not available. Cannot make the second request.');
         }
     })
@@ -80,7 +81,7 @@ getResponse('https://sumukhi.webchartnow.com/webchart.cgi', { 'login_user': 'Sum
         if (response && response.status === 200) {
             console.log('Second request successful.');
             // Log the response after the second request
-            console.log('Response after second request:', response);
+            //console.log('Response after second request:', response);
         } else {
             console.log('Second request failed.');
             // Handle failure
