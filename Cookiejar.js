@@ -5,7 +5,7 @@ import readlineSync from 'readline-sync';
 import { CookieJar } from 'tough-cookie'; // Cookie jar implementation
 
 // Base URL
-const BASE_URL = 'https://sumukhi.webchartnow.com';
+const apiUrl = 'https://sumukhi.webchartnow.com';
 
 // Create a new cookie jar
 const jar = new CookieJar();
@@ -36,7 +36,7 @@ const main = async () => {
         const password = getPassword();
 
         // Authenticate user and obtain session cookie
-        const response = await getResponse(`${BASE_URL}/webchart.cgi`, { 'login_user': 'Sumu1231', 'login_passwd': password });
+        const response = await getResponse(`${apiUrl}/webchart.cgi`, { 'login_user': 'Sumu1231', 'login_passwd': password });
 
         // Handle authentication response
         if (response && response.status === 200) {
@@ -45,7 +45,7 @@ const main = async () => {
             // Make subsequent requests using the cookie jar
             //console.log('Subsequent requests using cookie jar:');
             // Example: Make a second request
-            const secondResponse = await client.post(`${BASE_URL}/webchart.cgi`);
+            const secondResponse = await client.post(`${apiUrl}/webchart.cgi`);
             console.log("Second request successful");
             // Handle the response of the second request
             // console.log('Second request response:', secondResponse.data);
