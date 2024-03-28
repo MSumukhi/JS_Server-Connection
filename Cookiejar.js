@@ -41,11 +41,9 @@ const main = async () => {
         // Handle authentication response
         if (response && response.status === 200) {
             console.log('Authentication successful.');
-            // Print the cookie jar
-            console.log('Cookie jar:', jar.getCookiesSync(BASE_URL));
-
+        
             // Make subsequent requests using the cookie jar
-            console.log('Subsequent requests using cookie jar:');
+            //console.log('Subsequent requests using cookie jar:');
             // Example: Make a second request
             const secondResponse = await client.post(`${BASE_URL}/webchart.cgi`);
             console.log("Second request successful");

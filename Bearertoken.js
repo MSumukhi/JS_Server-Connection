@@ -4,32 +4,35 @@ import readlineSync from 'readline-sync'; // Library for synchronous readline
 
 // Global variables
 let bearerToken = null; // Bearer token for authentication
+const apiUrl = 'https://sumukhi.webch.art/webchart.cgi'; // API URL
 
 /**
  * Function to send a POST request to obtain bearer token
- * @param {string} url - The URL to send the request to
  * @param {Object} data - Data to be sent in the request body
+ * @param {Object} headers - Optional headers to be sent with the request
  * @returns {Promise} - Promise representing the HTTP response
  */
-const getResponse = async (url, data = {}) => {
+const getResponse = async (data = {}, headers = {}) => {
     // Prepare request parameter using URLSearchParams for constructing the request body
     const params = new URLSearchParams();
-    // Add username and password to the request body
-    let headers = {};
+    // Add username and password to the request body if bearerToken is not available
     if (!bearerToken) {
         params.append('login_user', data['login_user']); // Add username
         params.append('login_passwd', data['login_passwd']); // Add password
-    } else {
+    }
+
+    // Set headers if provided
+    if (Object.keys(headers).length === 0 && headers.constructor === Object) {
         headers['Authorization'] = `Bearer ${bearerToken}`;
     }
-    console.log(headers);
+
     let options = {
         headers: headers,
         method: "POST",
         data: params
     };
 
-    return axios(url, options);
+    return axios(apiUrl, options);
 };
 
 // Function to prompt the user for password input and store it
@@ -42,14 +45,14 @@ const getPassword = () => {
 };
 
 // Authenticate user and obtain bearer token
-getResponse('https://sumukhi.webch.art/webchart.cgi', { 'login_user': 'Sumu1231', 'login_passwd': getPassword() })
+getResponse({ 'login_user': 'Sumu1231', 'login_passwd': getPassword() })
     .then(response => {
         // Check if authentication was successful
         if (response && response.status === 200) {
             console.log('Authentication successful.');
             if (response.headers['set-cookie']) {
                 bearerToken = response.headers['set-cookie'][0].split('=')[1].split(';')[0];
-                console.log('BearerToken:', bearerToken);
+                //console.log('BearerToken:', bearerToken);
             } else {
                 console.log('Set-cookie header not found or empty.');
             }
@@ -60,12 +63,8 @@ getResponse('https://sumukhi.webch.art/webchart.cgi', { 'login_user': 'Sumu1231'
     .then(() => {
         // Make another request using the obtained bearer token
         if (bearerToken) {
-            console.log('Attempting second request using bearerToken:', bearerToken);
-            return getResponse('https://sumukhi.webch.art/webchart.cgi', {
-                headers: {
-                    Authorization: `Bearer ${bearerToken}`
-                }
-            });
+            //console.log('Attempting second request using bearerToken:', bearerToken);
+            return getResponse();
         } else {
             console.log('BearerToken not available. Cannot make the second request.');
             throw new Error('BearerToken not available. Cannot make the second request.');
