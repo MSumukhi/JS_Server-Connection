@@ -24,5 +24,5 @@ jobs:
     - name: Authenticate with Axios
       env:
         password: ${{ secrets.PASSWORD }}
-        USERNAME: ${{ vars.USERNAME}}
+        username: ${{ vars.USERNAME}}
       run: node axios.js # Run the authentication script using Axios
