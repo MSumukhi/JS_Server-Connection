@@ -4,9 +4,9 @@ import readlineSync from 'readline-sync'; // Library for synchronous readline
 
 // Global variables
 let cookie = null; // Cookie for session management
-let username = null;
+let username = 'Sumu1231';
 let password = null; // User password for authentication
-const apiUrl = process.argv[2]; // API URL
+const apiUrl = 'https://sumukhi.webchartnow.com/wenchart.cgi'; // API URL
 
 /**
  * Function to send a POST request to a specified URL with provided data
