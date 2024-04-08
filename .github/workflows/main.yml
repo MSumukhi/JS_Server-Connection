@@ -24,4 +24,5 @@ jobs:
     - name: Authenticate with Axios
       env:
         password: ${{ secrets.PASSWORD }}
-      run: node Cookiejar.js # Run the authentication script using Axios
+        USERNAME: ${{ github.action_variables.USERNAME}}
+      run: node axios.js # Run the authentication script using Axios
