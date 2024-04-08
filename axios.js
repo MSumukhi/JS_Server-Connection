@@ -4,7 +4,7 @@ import readlineSync from 'readline-sync'; // Library for synchronous readline
 
 // Global variables
 let cookie = null; // Cookie for session management
-let username = process.argv[3];
+let username = null;
 let password = null; // User password for authentication
 const apiUrl = process.argv[2]; // API URL
 
