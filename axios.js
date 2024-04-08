@@ -4,8 +4,9 @@ import readlineSync from 'readline-sync'; // Library for synchronous readline
 
 // Global variables
 let cookie = null; // Cookie for session management
+let username = process.argv[3]
 let password = null; // User password for authentication
-const apiUrl = 'https://sumukhi.webchartnow.com/webchart.cgi'; // API URL
+const apiUrl = process.argv[2]; // API URL
 
 /**
  * Function to send a POST request to a specified URL with provided data
@@ -41,7 +42,7 @@ const getResponse = async (data = {}, headers = {}) => {
  */
 const getPassword = () => {
     // Use readlineSync to prompt for password input and mask it with 'X'
-    password = readlineSync.question('Enter your password for user Sumu1231: ', {
+    password = readlineSync.question('Enter your password for user ' + username + ':', {
         hideEchoBack: true,
         mask: 'X'
     });
@@ -51,7 +52,7 @@ const getPassword = () => {
 getPassword();
 
 // Authenticate user and obtain session cookie
-getResponse({ 'login_user': 'Sumu1231', 'login_passwd': password })
+getResponse({ 'login_user': username, 'login_passwd': password })
     .then(response => {
         // Check if authentication was successful
         if (response && response.status === 200) {
