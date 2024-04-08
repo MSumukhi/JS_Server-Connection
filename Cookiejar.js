@@ -2,7 +2,7 @@
 import axios from 'axios'; // Library for making HTTP requests
 import { wrapper } from 'axios-cookiejar-support';
 import readlineSync from 'readline-sync';
-import { CookieJar } from 'tough-cookie'; // Cookie jar implementation
+import { CookieJar } from 'tough-cookie'; 
 
 // Base URL
 const apiUrl = 'https://sumukhi.webchartnow.com';
