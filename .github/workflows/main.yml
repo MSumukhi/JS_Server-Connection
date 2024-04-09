@@ -26,4 +26,10 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         username: ${{ vars.USERNAME }}
       run: node Cookiejar.js $username
+
+    - name: Authenticate with Bearertoken.js
+      env:
+        PASSWORD: ${{ secrets.PASSWORD }}
+        USERNAME: ${{ secrets.USERNAME }}
+      run: node Bearertoken.js
          
