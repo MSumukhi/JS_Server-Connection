@@ -4,8 +4,8 @@ import { get } from 'https';
 import readlineSync from 'readline-sync'; // Library for synchronous readline
 
 // Global variables
-let bearerToken = null; 
-let password = null;// Bearer token for authentication
+let bearerToken = null; // Bearer token for authentication
+let password = process.argv[3];
 const apiUrl = 'https://sumukhi.webch.art/webchart.cgi'; // API URL
 const username = process.argv[2];
 
@@ -37,17 +37,6 @@ const getResponse = async (data = {}, headers = {}) => {
 
     return axios(apiUrl, options);
 };
-
-// Function to prompt the user for password input and store it
-const getPassword = () => {
-    // Use readlineSync to prompt for password input and mask it with 'X'
-    return readlineSync.question('Enter your password for user ' + username + ': ', {
-        hideEchoBack: true,
-        mask: 'X'
-    });
-};
-
-password = getPassword();
 
 // Authenticate user and obtain bearer token
 getResponse({ 'login_user': username, 'login_passwd': password })
