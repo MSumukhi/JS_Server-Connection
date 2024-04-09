@@ -31,5 +31,5 @@ jobs:
       env:
         password: ${{ secrets.PASSWORD }}
         username: ${{ vars.USERNAME }}
-      run: node Bearertoken.js $username
+      run: node Bearertoken.js $username $password
          
