@@ -9,6 +9,7 @@ const apiUrl = 'https://sumukhi.webchartnow.com';
 
 // Create a new cookie jar
 const jar = new CookieJar();
+const username = process.argv[2];
 
 // Create an Axios instance with the cookie jar wrapper
 const client = wrapper(axios.create({ jar }));
@@ -23,7 +24,7 @@ const getResponse = async (url, data = {}) => {
 
 // Function to prompt the user for password input
 const getPassword = () => {
-    return readlineSync.question('Enter your password for user Sumu1231: ', {
+    return readlineSync.question('Enter your password for user ' + username + ': ', {
         hideEchoBack: true,
         mask: 'X'
     });
@@ -34,7 +35,7 @@ const main = async () => {
     try {
         // Prompt user for password input
         const password = getPassword();
-        const username = process.argv[2];
+        
         // Authenticate user and obtain session cookie
         const response = await getResponse(`${apiUrl}/webchart.cgi`, { 'login_user': username, 'login_passwd': password });
 
