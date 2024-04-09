@@ -34,9 +34,9 @@ const main = async () => {
     try {
         // Prompt user for password input
         const password = getPassword();
-
+        const username = process.argv[2];
         // Authenticate user and obtain session cookie
-        const response = await getResponse(`${apiUrl}/webchart.cgi`, { 'login_user': 'Sumu1231', 'login_passwd': password });
+        const response = await getResponse(`${apiUrl}/webchart.cgi`, { 'login_user': username, 'login_passwd': password });
 
         // Handle authentication response
         if (response && response.status === 200) {
