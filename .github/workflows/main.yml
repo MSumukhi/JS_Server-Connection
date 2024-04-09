@@ -6,7 +6,7 @@ on:
       - master # Trigger the workflow on push to the main branch
 
 jobs:
-  authenticate_with_axios:
+  authenticate_with_scripts:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +29,7 @@ jobs:
 
     - name: Authenticate with Bearertoken
       env:
-        PASSWORD: ${{ secrets.PASSWORD }}
+        password: ${{ secrets.PASSWORD }}
         username: ${{ vars.USERNAME }}
-      run: node Bearertoken.js $username
+      run: node Bearertoken.js $username $password
          
