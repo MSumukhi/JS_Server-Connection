@@ -25,7 +25,5 @@ jobs:
       env:
         password: ${{ secrets.PASSWORD }}
         username: ${{ vars.USERNAME }}
-        run: |
-          for script in axios.js client.js Bearertoken.js Cookiejar.js; do
-            node $script
-          done # Run the authentication script using Axios
+      run: node Cookiejar.js $username
+         
