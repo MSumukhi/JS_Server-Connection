@@ -60,7 +60,8 @@ When prompted, enter the password for the user.
 Sumukhi Sri Sai Mathapati
 
 ## Acknowledgements
-- Node.js: JavaScript runtime environment
-- node-fetch: Fetch Library for making HTTP requests in Node.js
-- axios: Axios Library for making HTTP requests in Node.js
-- readline-sync: Library for synchronous readline in Node.js
+## Acknowledgements
+- [Node.js](https://nodejs.org/): JavaScript runtime environment
+- [node-fetch](https://www.npmjs.com/package/node-fetch): Fetch Library for making HTTP requests in Node.js
+- [axios](https://github.com/axios/axios): Axios Library for making HTTP requests in Node.js
+- [readline-sync](https://www.npmjs.com/package/readline-sync): Library for synchronous readline in Node.js
