@@ -27,6 +27,13 @@ jobs:
         username: ${{ vars.USERNAME }}
       run: node Bearertoken.js $username $password
 
+    - name: Authenticate with Fetchdata
+      env:
+        password: ${{ secrets.PASSWORD }}
+        username: ${{ vars.USERNAME }}
+      run: node client.js $username $password
+
+
     - name: Authenticate with Cookiejar
       env:
         password: ${{ secrets.PASSWORD }}
