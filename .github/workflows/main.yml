@@ -25,7 +25,7 @@ jobs:
       env:
         password: ${{ secrets.PASSWORD }}
         username: ${{ vars.USERNAME }}
-      run: node Bearertoken.js $username $password
+      run: node Bearertoken.js $username 
 
     - name: Authenticate with Fetchdata
       env:
