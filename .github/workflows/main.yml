@@ -31,17 +31,10 @@ jobs:
       env:
         password: ${{ secrets.PASSWORD }}
         username: ${{ vars.USERNAME }}
-      run: node client.js $username $password
-
+      run: node client.js $username 
 
     - name: Authenticate with Cookiejar
       env:
         password: ${{ secrets.PASSWORD }}
         username: ${{ vars.USERNAME }}
       run: node Cookiejar.js $username
-
-    - name: Authenticate with token
-      env:
-        password: ${{ secrets.PASSWORD }}
-        username: ${{ vars.USERNAME }}
-      run: node token.js $username
