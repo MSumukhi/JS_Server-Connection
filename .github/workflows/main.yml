@@ -44,6 +44,6 @@ jobs:
       env:
         password: ${{ secrets.PASSWORD }}
         username: ${{ vars.USERNAME }}
-      run: node token.js $username
+      run: node token.js ${{ secrets.USERNAME }} ${{ secrets.PASSWORD }}
 
          
