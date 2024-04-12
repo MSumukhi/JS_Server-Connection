@@ -1,20 +1,13 @@
 // Import necessary modules
 import axios from 'axios'; // Library for making HTTP requests
-import { get } from 'https';
 import readlineSync from 'readline-sync'; // Library for synchronous readline
 
 // Global variables
 let bearerToken = null; // Bearer token for authentication
-let password = process.argv[3];
 const apiUrl = 'https://sumukhi.webch.art/webchart.cgi'; // API URL
 const username = process.argv[2];
 
-/**
- * Function to send a POST request to obtain bearer token
- * @param {Object} data - Data to be sent in the request body
- * @param {Object} headers - Optional headers to be sent with the request
- * @returns {Promise} - Promise representing the HTTP response
- */
+// Function to send a POST request to obtain bearer token
 const getResponse = async (data = {}, headers = {}) => {
     // Prepare request parameter using URLSearchParams for constructing the request body
     const params = new URLSearchParams();
@@ -38,9 +31,23 @@ const getResponse = async (data = {}, headers = {}) => {
     return axios(apiUrl, options);
 };
 
-// Authenticate user and obtain bearer token
-getResponse({ 'login_user': username, 'login_passwd': password })
-    .then(response => {
+// Function to prompt the user for password input and store it
+const getPassword = () => {
+    // Use readlineSync to prompt for password input and mask it with 'X'
+    return readlineSync.question('Enter your password for user ' + username + ': ', {
+        hideEchoBack: true,
+        mask: 'X'
+    });
+};
+
+// Main function to authenticate user and make subsequent requests
+const main = async () => {
+    try {
+
+        const password = getPassword();
+        // Authenticate user and obtain bearer token
+        const response = await getResponse({ 'login_user': username, 'login_passwd': password });
+        
         // Check if authentication was successful
         if (response && response.status === 200) {
             console.log('Authentication successful.');
@@ -52,30 +59,31 @@ getResponse({ 'login_user': username, 'login_passwd': password })
             }
         } else {
             console.log('Authentication failed. Please check your password.');
+            return; // Exit function if authentication fails
         }
-    })
-    .then(() => {
+
         // Make another request using the obtained bearer token
         if (bearerToken) {
             //console.log('Attempting second request using bearerToken:', bearerToken);
-            return getResponse();
+            const secondResponse = await getResponse();
+            // Handle the response of the second request
+            if (secondResponse && secondResponse.status === 200) {
+                console.log('Second request successful.');
+                // Log the response after the second request
+                //console.log('Response after second request:', secondResponse);
+            } else {
+                console.log('Second request failed.');
+                // Handle failure
+            }
         } else {
             console.log('BearerToken not available. Cannot make the second request.');
-            throw new Error('BearerToken not available. Cannot make the second request.');
+            return; // Exit function if bearerToken is not available
         }
-    })
-    .then(response => {
-        // Handle the response of the second request
-        if (response && response.status === 200) {
-            console.log('Second request successful.');
-            // Log the response after the second request
-            //console.log('Response after second request:', response);
-        } else {
-            console.log('Second request failed.');
-            // Handle failure
-        }
-    })
-    .catch(error => {
+    } catch (error) {
         // Handle errors
         console.error('Error during authentication or second request: ', error);
-    });
+    }
+};
+
+// Execute main function
+main();
