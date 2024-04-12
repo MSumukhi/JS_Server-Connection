@@ -39,4 +39,9 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         username: ${{ vars.USERNAME }}
       run: node Cookiejar.js $username
-      
+
+    - name: Authenticate with token
+      env:
+        password: ${{ secrets.PASSWORD }}
+        username: ${{ vars.USERNAME }}
+      run: node token.js $username
