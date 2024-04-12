@@ -39,5 +39,4 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         username: ${{ vars.USERNAME }}
       run: node Cookiejar.js $username
-
-         
+      
