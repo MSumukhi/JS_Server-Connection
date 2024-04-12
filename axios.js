@@ -4,7 +4,6 @@ import readlineSync from 'readline-sync'; // Library for synchronous readline
 
 // Global variables
 let cookie = null; // Cookie for session management
-let password = null; // User password for authentication
 const apiUrl = 'https://sumukhi.webchartnow.com/webchart.cgi'; // API URL
 
 /**
@@ -47,47 +46,51 @@ const getPassword = () => {
     });
 };
 
-// Prompt user for password input
-getPassword();
+/**
+ * Main function to authenticate user and make subsequent requests
+ */
+const main = async () => {
+    
+    try {
 
-// Authenticate user and obtain session cookie
-getResponse({ 'login_user': 'Sumu1231', 'login_passwd': password })
-    .then(response => {
+        // Prompt user for password input
+        const password = getPassword();
+        // Authenticate user and obtain session cookie
+        const authResponse = await getResponse({ 'login_user': 'Sumu1231', 'login_passwd': password });
+        
         // Check if authentication was successful
-        if (response && response.status === 200) {
+        if (authResponse && authResponse.status === 200) {
             console.log('Authentication successful.');
-            if (response.headers['set-cookie']) {
-                cookie = response.headers['set-cookie'][0].split('=')[1].split(';')[0];
-                //console.log('cookie:', cookie);
+            if (authResponse.headers['set-cookie']) {
+                cookie = authResponse.headers['set-cookie'][0].split('=')[1].split(';')[0];
             } else {
                 console.log('Set-cookie header not found or empty.');
             }
         } else {
             console.log('Authentication failed. Please check your password.');
+            return;
         }
-    })
-    .then(() => {
+
         // Make another request using the obtained cookie
         if (cookie) {
-            //console.log('Attempting second request using cookie:', cookie);
-            return getResponse();
+            const secondResponse = await getResponse();
+            // Handle the response of the second request
+            if (secondResponse && secondResponse.status === 200) {
+                console.log('Second request successful.');
+                // Log the response after the second request
+                //console.log('Response after second request:', secondResponse);
+            } else {
+                console.log('Second request failed.');
+                // Handle failure
+            }
         } else {
-            //console.log('Cookie not available. Cannot make the second request.');
-            throw new Error('Cookie not available. Cannot make the second request.');
+            console.log('Cookie not available. Cannot make the second request.');
         }
-    })
-    .then(response => {
-        // Handle the response of the second request
-        if (response && response.status === 200) {
-            console.log('Second request successful.');
-            // Log the response after the second request
-            //console.log('Response after second request:', response);
-        } else {
-            console.log('Second request failed.');
-            // Handle failure
-        }
-    })
-    .catch(error => {
+    } catch (error) {
         // Handle errors
         console.error('Error during authentication or second request: ', error);
-    });
+    }
+};
+
+// Call the main function to start the authentication process
+main();

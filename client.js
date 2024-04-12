@@ -6,7 +6,8 @@ import readlineSync from 'readline-sync'; // Library for synchronous readline
 
 // Global variables
 let cookie = null; // Cookie for session management
-let password = null; // User password for authentication
+let username = process.argv[2];
+let password = process.argv[3]; // User password for authentication
 
 /**
  * Function to send a POST request to a specified URL with provided data
@@ -21,7 +22,7 @@ const getResponse = async (url, data = {}) => {
   if (cookie) {
     data['wc_miehr_sumukhi_session_id'] = cookie;
   }else{
-    params.append('login_user', "Sumu1231"); // Add username
+    params.append('login_user', username); // Add username
     params.append('login_passwd', password); // Add password
   }
 
@@ -35,25 +36,11 @@ const getResponse = async (url, data = {}) => {
 };
 
 /**
- * Function to prompt the user for password input and store it
- */
-const getPassword = () => {
-  // Use readlineSync to prompt for password input and mask it with 'X'
-  password = readlineSync.question('Enter your password for user Sumu1231: ', {
-    hideEchoBack: true,
-    mask: 'X'
-  });
-};
-
-/**
  * Function to fetch data from a specified URL with authentication
  * @returns {Promise} - Promise representing the HTTP response
  */
 const fetchData = async () => {
   try {
-    // Prompt user for password input
-    getPassword();
-    
     // Authenticate with provided credentials
     const response = await getResponse('https://sumukhi.webchartnow.com/webchart.cgi');
     
@@ -61,7 +48,7 @@ const fetchData = async () => {
     if (response.ok) {
       console.log('Authentication successful.');
       cookie=response.headers;
-      console.log(response.headers);
+      //console.log(response.headers);
       return response; // Return the response object
     } else {
       console.log('Authentication failed. Please check your password.');
@@ -79,7 +66,7 @@ fetchData()
   .then(response => {
     if (response) {
       // response if authentication was successful
-      console.log('Response:', response);
+      //console.log('Response:', response);
     } else {
       // Handle authentication failure
       console.log('Authentication failed.');
