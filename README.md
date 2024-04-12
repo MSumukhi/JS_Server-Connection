@@ -15,7 +15,8 @@ The `client.js` script demonstrates how to connect to a server using the Fetch A
 2. Navigate to the project directory.
 3. Open a terminal window.
 4. Run the following command to install dependencies: `npm install`
-5. Run the script using the following command: `node client.js <username> <password>`
+5. Run the script using the following command: `node client.js <username>`
+6. When prompted, enter the password for the user.
 
 ### Description
 - Uses node-fetch library to make HTTP requests.
@@ -40,8 +41,6 @@ The `Cookiejar.js` script demonstrates how to connect to a server using Axios wi
 
 ### Usage
 Follow the same usage instructions as for the Fetch API Script (`client.js`)
-Run the script using the following command: `node Cookiejar.js`
-When prompted, enter the password for the user.
 
 ### Description
 - Uses Axios library to make HTTP requests with CookieJar authentication.
