@@ -59,7 +59,6 @@ Follow the same usage instructions as for the Fetch API Script (`client.js`)
 Sumukhi Sri Sai Mathapati
 
 ## Acknowledgements
-## Acknowledgements
 - [Node.js](https://nodejs.org/): JavaScript runtime environment
 - [node-fetch](https://www.npmjs.com/package/node-fetch): Fetch Library for making HTTP requests in Node.js
 - [axios](https://github.com/axios/axios): Axios Library for making HTTP requests in Node.js
